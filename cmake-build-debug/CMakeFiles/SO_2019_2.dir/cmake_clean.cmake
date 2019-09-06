@@ -1,9 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/SO_2019_2.dir/main.cpp.obj"
+  "CMakeFiles/SO_2019_2.dir/main.cpp.o"
   "SO_2019_2.pdb"
-  "SO_2019_2.exe"
-  "SO_2019_2.exe.manifest"
-  "SO_2019_2.lib"
+  "SO_2019_2"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/filipe.ramalho/Documents/SO-2019-2/main.cpp" "C:/Users/filipe.ramalho/Documents/SO-2019-2/cmake-build-debug/CMakeFiles/SO_2019_2.dir/main.cpp.obj"
+  "/home/filipe/Documentos/SO-2019-2/main.cpp" "/home/filipe/Documentos/SO-2019-2/cmake-build-debug/CMakeFiles/SO_2019_2.dir/main.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "MSVC")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
