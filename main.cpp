@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 #include <vector>
 #include "fcfs.h"
 #include "rr.h"
@@ -10,63 +11,63 @@
 
 using namespace std;
 
-vector<Task> readInput(int * N);
+vector<Task> readInput();
+void executeFlow(const string& name, Flow (*flowCall)(vector<Task>&), const vector<Task>& tasks);
+void executeFlow(const string& name, Flow (*flowCall)(vector<Task>&,int), const vector<Task>& tasks, int option);
 
 int main() {
-    int N;
-    vector<Task> tasks = readInput(&N);
-    cout << "______________________FCFS______________________" << endl;
-    FCFS(tasks);
-    cout << endl;
-    cout << "______________________RR______________________" << endl;
-    RR(tasks,2);
-    cout << endl;
-
-    cout << "______________________SJF______________________" << endl;
-    SJF(tasks);
-    cout << endl;
-
-    cout << "______________________SRTF______________________" << endl;
-    SRTF(tasks);
-    cout << endl;
-
-    cout << "______________________PRIOc______________________" << endl;
-    PRIOc(tasks);
-    cout << endl;
-
-    cout << "______________________PRIOp______________________" << endl;
-    PRIOp(tasks);
-    cout << endl;
-
-    cout << "______________________PRIOd______________________" << endl;
-    PRIOd(tasks,1);
-    cout << endl;
-
-
+    vector<Task> tasks = readInput();
+    executeFlow("FCFS",FCFS,tasks);
+    executeFlow("RR",RR,tasks,2);
+    executeFlow("SJF",SJF,tasks);
+    executeFlow("SRTF",SRTF,tasks);
+    executeFlow("PRIOc",PRIOc,tasks);
+    executeFlow("PRIOp",PRIOp,tasks);
+    executeFlow("PRIOd",PRIOd,tasks,1);
     return 0;
 }
 
-vector<Task> readInput(int *N){
+vector<Task> readInput(){
     vector<Task> tasks;
-    cin >> *N;
+    int N;
+    cin >> N;
     int s;
-    for(int i=0;i<(*N);i++){
+    for(int i=0;i<(N);i++){
         cin >> s;
         auto task = Task();
         task.id = (i+1);
         task.time_in = s;
         tasks.push_back(task);
     }
-    for(int i=0; i < (*N);i++){
+    for(int i=0; i < (N);i++){
         cin >> s;
         tasks[i].duration = s;
     }
-    for(int i=0; i < (*N);i++){
+    for(int i=0; i < (N);i++){
         cin >> s;
         tasks[i].priority = s;
         tasks[i].dynamic_priority = s;
     }
     return tasks;
+}
+
+
+void executeFlow(const string& name, Flow (*flowCall)(vector<Task>&), const vector<Task>& tasks){
+    cout << "\033[1;34m______________________"<<name<<"______________________\033[0m" << endl;
+    Flow flow = flowCall((vector<struct Task> &) tasks);
+
+    cout << "\033[33m--------------------Métricas:-------------------\033[0m" << endl;
+    cout << "Tempo Médio: " << flow.avgTime << "; Trocas de Contexto: "<<flow.context_changes<<endl;
+    cout<<"\n\n"<<endl;
+}
+
+
+void executeFlow(const string& name, Flow (*flowCall)(vector<Task>&,int), const vector<Task>& tasks,int option){
+    cout << "\033[1;34m______________________"<<name<<"______________________\033[0m" << endl;
+    Flow flow = flowCall((vector<struct Task> &) tasks,option);
+    cout << "\033[33m--------------------Métricas:-------------------\033[0m" << endl;
+    cout << "Tempo Médio: " << flow.avgTime << "; Trocas de Contexto: "<<flow.context_changes<<endl;
+    cout<<"\n\n"<<endl;
 }
 
 

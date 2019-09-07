@@ -18,8 +18,10 @@ public:
     int ended = 0;
     int time=0;
     int quantum=0;
-    int alpha=0;
+    int context_changes=0;
+    float avgTime = 0;
 
+    int alpha=0;
     explicit Flow(const std::vector<Task>& tasks):tasks(const_cast<std::vector<Task> &>(tasks)){}
     explicit Flow(const std::vector<Task>& tasks,int quantum):tasks(const_cast<std::vector<Task> &>(tasks)),quantum(quantum){}
     void start();
@@ -28,7 +30,8 @@ public:
     void finalizeFlow();
     void (*callback)(Flow*){};
     void (*sortqueue_callback)(Flow*)=nullptr;
-
+    void finalizeTaskAndStartNext();
+    void changeContext();
 };
 
 
@@ -53,6 +56,25 @@ void Flow::start(){
         }
         this->time++;
     }
+}
+
+void Flow::finalizeTaskAndStartNext(){
+    this->executing.endTask(this->time);
+    this->avgTime += ((float) (this->executing.time_end - this->executing.time_in))/this->tasks.size();
+    this->ended++;
+    if(!this->queue.empty()){
+        this->context_changes++;
+        this->executing = this->getNext();
+        this->executing.startTask(this->time);
+    }
+}
+
+void Flow::changeContext(){
+    this->context_changes ++;
+    this->executing.pauseTask(this->time);
+    this->queue.push_back(this->executing);
+    this->executing = this->getNext();
+    this->executing.startTask(this->time);
 }
 
 Task Flow::getNext(){

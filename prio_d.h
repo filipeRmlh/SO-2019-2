@@ -21,19 +21,11 @@ void priod_callback(Flow *flow){
     }else{
         flow->executing.dynamic_priority=flow->executing.priority;
         if(flow->executing.status == STARTED && flow->executing.total_passed_time == flow->executing.duration){
-            flow->executing.endTask(flow->time);
-            flow->ended++;
-            if(!flow->queue.empty()){
-                flow->executing = flow->getNext();
-                flow->executing.startTask(flow->time);
-            }
+            flow->finalizeTaskAndStartNext();
         }
 
         if(!flow->queue.empty() && flow->executing.status == STARTED && (flow->queue.front().dynamic_priority > flow->executing.dynamic_priority)){
-            flow->executing.pauseTask(flow->time);
-            flow->queue.push_back(flow->executing);
-            flow->executing = flow->getNext();
-            flow->executing.startTask(flow->time);
+            flow->changeContext();
         }
 
 

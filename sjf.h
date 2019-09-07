@@ -18,12 +18,7 @@ void sjf_callback(Flow *flow){
         flow->executing.startTask(flow->time);
     }else{
         if(flow->executing.status == STARTED && flow->executing.total_passed_time == flow->executing.duration){
-            flow->executing.endTask(flow->time);
-            flow->ended++;
-            if(!flow->queue.empty()){
-                flow->executing = flow->getNext();
-                flow->executing.startTask(flow->time);
-            }
+            flow->finalizeTaskAndStartNext();
         }
 
         if(flow->ended == flow->tasks.size() && flow->queue.empty()){

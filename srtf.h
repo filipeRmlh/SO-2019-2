@@ -19,19 +19,11 @@ void srtf_callback(Flow *flow){
         flow->executing.startTask(flow->time);
     }else{
         if(flow->executing.status == STARTED && flow->executing.total_passed_time == flow->executing.duration){
-            flow->executing.endTask(flow->time);
-            flow->ended++;
-            if(!flow->queue.empty()){
-                flow->executing = flow->getNext();
-                flow->executing.startTask(flow->time);
-            }
+            flow->finalizeTaskAndStartNext();
         }
 
         if(!flow->queue.empty() && flow->executing.status == STARTED && flow->queue.front().duration < (flow->executing.duration-flow->executing.total_passed_time)){
-            flow->executing.pauseTask(flow->time);
-            flow->queue.push_back(flow->executing);
-            flow->executing = flow->getNext();
-            flow->executing.startTask(flow->time);
+            flow->changeContext();
         }
 
         if(flow->ended == flow->tasks.size() && flow->queue.empty()){

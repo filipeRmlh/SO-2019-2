@@ -12,6 +12,7 @@ public:
     int status=CREATED,
         id=-1,
         time_in=-1,
+        time_end=-1,
         duration=-1,
         priority=-1,
         dynamic_priority=-1,
@@ -45,6 +46,7 @@ void Task::pauseTask(int time){
 }
 
 void Task::endTask(int time){
+    this->time_end=time;
     std::cout << "Finalizando Tarefa "<<this->id << std::endl;
     this->status = ENDED;
 }
