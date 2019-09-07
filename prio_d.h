@@ -1,9 +1,9 @@
 //
-// Created by filipe on 06/09/2019.
+// Created by filipe on 07/09/2019.
 //
 
-#ifndef SO_2019_2_SRTF_H
-#define SO_2019_2_SRTF_H
+#ifndef SO_2019_2_PRIO_D_H
+#define SO_2019_2_PRIO_D_H
 
 
 #include <vector>
@@ -12,12 +12,14 @@
 #include <iostream>
 #include "Flow.h"
 
-void srtf_callback(Flow *flow){
+void priod_callback(Flow *flow){
     if(!flow->startedFlow && !flow->queue.empty()){
         flow->initializeFlow();
         flow->executing = flow->getNext();
         flow->executing.startTask(flow->time);
+        flow->executing.dynamic_priority=flow->executing.priority;
     }else{
+        flow->executing.dynamic_priority=flow->executing.priority;
         if(flow->executing.status == STARTED && flow->executing.total_passed_time == flow->executing.duration){
             flow->executing.endTask(flow->time);
             flow->ended++;
@@ -27,12 +29,13 @@ void srtf_callback(Flow *flow){
             }
         }
 
-        if(!flow->queue.empty() && flow->executing.status == STARTED && flow->queue.front().duration < (flow->executing.duration-flow->executing.total_passed_time)){
+        if(!flow->queue.empty() && flow->executing.status == STARTED && (flow->queue.front().dynamic_priority > flow->executing.dynamic_priority)){
             flow->executing.pauseTask(flow->time);
             flow->queue.push_back(flow->executing);
             flow->executing = flow->getNext();
             flow->executing.startTask(flow->time);
         }
+
 
         if(flow->ended == flow->tasks.size() && flow->queue.empty()){
             flow->finalizeFlow();
@@ -45,26 +48,29 @@ void srtf_callback(Flow *flow){
 }
 
 
-bool srtf_compare (const Task& first, const Task& second){
-    return first.duration < second.duration;
+bool priod_compare (const Task& first, const Task& second){
+    return first.dynamic_priority > second.dynamic_priority;
 }
 
-void srtf_sortqueue_callback(Flow * flow){
+void priod_sortqueue_callback(Flow * flow){
     for (auto &task : flow->tasks) {
         if (task.time_in == flow->time) {
+            task.dynamic_priority += flow->alpha;
             flow->queue.push_back(task);
         }
     }
-    flow->queue.sort(srtf_compare);
+    flow->queue.sort(priod_compare);
 }
 
-Flow SRTF(std::vector<Task>& tasks){
-    Flow srtf = Flow(tasks);
-    srtf.callback = srtf_callback;
-    srtf.sortqueue_callback = srtf_sortqueue_callback;
-    srtf.start();
-    return srtf;
+Flow PRIOd(std::vector<Task>& tasks, int alpha){
+    Flow priod = Flow(tasks);
+    priod.alpha=alpha;
+    priod.callback = priod_callback;
+    priod.sortqueue_callback = priod_sortqueue_callback;
+    priod.start();
+    return priod;
 }
 
 
-#endif //SO_2019_2_SRTF_H
+
+#endif //SO_2019_2_PRIO_D_H

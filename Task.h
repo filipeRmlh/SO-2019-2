@@ -14,6 +14,7 @@ public:
         time_in=-1,
         duration=-1,
         priority=-1,
+        dynamic_priority=-1,
         time_start=-1,
         passed_time = 0,
         total_passed_time=0;

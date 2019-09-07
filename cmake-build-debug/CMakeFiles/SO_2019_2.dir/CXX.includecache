@@ -45,8 +45,22 @@ prio_c.h
 /home/filipe/Documentos/SO-2019-2/prio_c.h
 prio_p.h
 /home/filipe/Documentos/SO-2019-2/prio_p.h
+prio_d.h
+/home/filipe/Documentos/SO-2019-2/prio_d.h
 
 /home/filipe/Documentos/SO-2019-2/prio_c.h
+vector
+-
+Task.h
+/home/filipe/Documentos/SO-2019-2/Task.h
+list
+-
+iostream
+-
+Flow.h
+/home/filipe/Documentos/SO-2019-2/Flow.h
+
+/home/filipe/Documentos/SO-2019-2/prio_d.h
 vector
 -
 Task.h

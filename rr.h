@@ -26,13 +26,11 @@ void rr_callback(Flow *flow){
             }
         }
 
-        if(flow->executing.status == STARTED && flow->executing.passed_time==flow->quantum){
+        if(!flow->queue.empty() && flow->executing.status == STARTED && flow->executing.passed_time==flow->quantum){
             flow->executing.pauseTask(flow->time);
             flow->queue.push_back(flow->executing);
-            if(!flow->queue.empty()) {
-                flow->executing = flow->getNext();
-                flow->executing.startTask(flow->time);
-            }
+            flow->executing = flow->getNext();
+            flow->executing.startTask(flow->time);
         }
 
         if(flow->ended == flow->tasks.size() && flow->queue.empty()){

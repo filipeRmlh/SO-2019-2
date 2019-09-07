@@ -6,6 +6,7 @@
 #include "srtf.h"
 #include "prio_c.h"
 #include "prio_p.h"
+#include "prio_d.h"
 
 using namespace std;
 
@@ -37,6 +38,10 @@ int main() {
     PRIOp(tasks);
     cout << endl;
 
+    cout << "______________________PRIOd______________________" << endl;
+    PRIOd(tasks,1);
+    cout << endl;
+
 
     return 0;
 }
@@ -48,7 +53,7 @@ vector<Task> readInput(int *N){
     for(int i=0;i<(*N);i++){
         cin >> s;
         auto task = Task();
-        task.id = i;
+        task.id = (i+1);
         task.time_in = s;
         tasks.push_back(task);
     }
@@ -59,6 +64,7 @@ vector<Task> readInput(int *N){
     for(int i=0; i < (*N);i++){
         cin >> s;
         tasks[i].priority = s;
+        tasks[i].dynamic_priority = s;
     }
     return tasks;
 }

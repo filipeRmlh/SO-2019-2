@@ -6,6 +6,7 @@ CMakeFiles/SO_2019_2.dir/main.cpp.o: ../Task.h
 CMakeFiles/SO_2019_2.dir/main.cpp.o: ../fcfs.h
 CMakeFiles/SO_2019_2.dir/main.cpp.o: ../main.cpp
 CMakeFiles/SO_2019_2.dir/main.cpp.o: ../prio_c.h
+CMakeFiles/SO_2019_2.dir/main.cpp.o: ../prio_d.h
 CMakeFiles/SO_2019_2.dir/main.cpp.o: ../prio_p.h
 CMakeFiles/SO_2019_2.dir/main.cpp.o: ../rr.h
 CMakeFiles/SO_2019_2.dir/main.cpp.o: ../sjf.h

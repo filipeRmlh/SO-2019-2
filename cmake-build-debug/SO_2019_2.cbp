@@ -99,6 +99,9 @@
 		<Unit filename="/home/filipe/Documentos/SO-2019-2/prio_c.h">
 			<Option target="SO_2019_2"/>
 		</Unit>
+		<Unit filename="/home/filipe/Documentos/SO-2019-2/prio_d.h">
+			<Option target="SO_2019_2"/>
+		</Unit>
 		<Unit filename="/home/filipe/Documentos/SO-2019-2/prio_p.h">
 			<Option target="SO_2019_2"/>
 		</Unit>

@@ -18,6 +18,7 @@ public:
     int ended = 0;
     int time=0;
     int quantum=0;
+    int alpha=0;
 
     explicit Flow(const std::vector<Task>& tasks):tasks(const_cast<std::vector<Task> &>(tasks)){}
     explicit Flow(const std::vector<Task>& tasks,int quantum):tasks(const_cast<std::vector<Task> &>(tasks)),quantum(quantum){}
